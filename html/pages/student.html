@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>student</title>
+		<link rel="stylesheet" type="text/css" href="../css/table.css" />
+		<style type="text/css">
+			.w600 {
+				width: 600px;
+			}
+			
+			.pd10 {
+				padding: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="pd10">
+
+			<table class="table table-border table-bg table-bordered w600">
+				<thead>
+					<tr>
+						<th width="20%">姓名</th>
+						<th width="20%">性别</th>
+						<th width="20%">年级</th>
+						<th width="20%">教师</th>
+						<th width="20%">电话</th>
+					</tr>
+				</thead>
+				<tbody id="list">
+					
+					
+				</tbody>
+			</table>
+
+		</div>
+
+		<script src="../js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function() {
+				getAll();
+			});
+
+			function getAll() {
+				$.ajax({
+					type: "post",
+					url: _baseUrl + "/student/getall",
+					dataType: 'json',
+					success: function(data) {
+						showList(data);
+					},
+					error: function() {
+						
+					}
+				});
+			}
+			
+			function showList(arr){
+				var sHtml="";
+				
+				for(var i=0;i<arr.length;i++){
+					var temp=arr[i];
+					sHtml+='<tr>';
+					sHtml+='<td>'+temp.name+'</td>';
+					sHtml+='<td>'+temp.gender+'</td>';
+					sHtml+='<td>'+temp.grade+'</td>';
+					sHtml+='<td>'+temp.teacher+'</td>';
+					sHtml+='<td>'+temp.phone+'</td>';
+					sHtml+='</tr>';
+				}
+				
+				document.getElementById("list").innerHTML=sHtml;
+				
+				
+			}
+		</script>
+	</body>
+
+</html>

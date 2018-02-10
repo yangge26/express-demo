@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>nba</title>
+		<link rel="stylesheet" type="text/css" href="../css/table.css" />
+		<style type="text/css">
+			.w600 {
+				width: 600px;
+			}
+			
+			.pd10 {
+				padding: 10px;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="pd10">
+
+			<table class="table table-border table-bg table-bordered w600">
+				<thead>
+					<tr>
+						<th width="25%">主队</th>
+						<th width="25%">比分</th>
+						<th width="25%">客队</th>
+						<th width="25%">状态</th>
+					</tr>
+				</thead>
+				<tbody id="list">
+
+				</tbody>
+			</table>
+
+		</div>
+
+		<script src="../js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function() {
+
+				getNBA();
+
+			});
+
+			function getNBA() {
+				$.ajax({
+					type: "get",
+					url: _baseUrl + "/student/nba",
+					dataType: 'json',
+					success: function(data) {
+						console.dir(JSON.parse(data).data.list);
+						showList(JSON.parse(data).data.list);
+					},
+					error: function() {
+
+					}
+				});
+			}
+
+			function showList(arr) {
+				var sHtml = "";
+
+				for(var i = 0; i < arr.length; i++) {
+					var temp = arr[i];
+					sHtml += '<tr>';
+					sHtml += '<td>' + temp['home_name'] + '</td>';
+					sHtml += '<td>' + temp['home_score'] + '-' + temp['away_score'] + '</td>';
+
+					sHtml += '<td>' + temp['away_name'] + '</td>';
+					sHtml += '<td>' + temp['process'] + '</td>';
+					sHtml += '</tr>';
+				}
+
+				document.getElementById("list").innerHTML = sHtml;
+
+			}
+		</script>
+	</body>
+
+</html>

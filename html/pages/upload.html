@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>图片上传</title>
+	</head>
+
+	<body>
+		<input type="file" name="files" id="files" value="" />
+		<input type="button" id="test" value="上传" />
+		<script src="../js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function() {
+				$("#test").on('click',function(){
+					upload();
+				});
+			});
+
+			function upload() {
+				var formData = new FormData();
+				formData.append('file', $('#files')[0].files[0]);
+				formData.append('name','hello');
+				$.ajax({
+					url: _baseUrl+'/upload/upload',
+					type: 'POST',
+					cache: false,
+					data: formData,
+					processData: false,
+					contentType: false
+				}).done(function(data) {
+					alert(JSON.stringify(data));
+				}).fail(function(data) {
+					
+				});
+			}
+		</script>
+	</body>
+
+</html>
